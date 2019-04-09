@@ -1,22 +1,18 @@
-
-
-
 <?php
-
 
 include_once 'header.php';
 
-
-$resp["status"] = "partial";
+$resp["message"] = "none";
 
 //if 1 or more of the security keys are invalid, respond that the request failed
 if( ! ( (strpos($_POST['key1'], $key1)!==false) && (strpos($_POST['key2'], $key2)!==false) ) ){
-	$resp["status"] = "failed";
+	$resp["message"] = "api failure";
 	echo json_encode($resp);
 	exit();
 }
 
-$name = $_POST['name'];
+$holderName = $_POST['holderName'];
+$busName = $_POST['busName'];
 $regNum = $_POST['regNum'];
 $phone = $_POST['phone'];
 $email = $_POST['email'];
@@ -26,13 +22,16 @@ $dateJoined = date('Y-m-d H:i:s');
 
 $affected = 0;
 
-$statement = $conn->prepare("INSERT INTO business (reg_num, business_name, phone, date_joined, email, password) VALUES (?,?,?,?,?,?)");
+$message = "received";
+
+$statement = $conn->prepare("INSERT INTO business (reg_num, holder_name, business_name, phone, date_joined, email, password) VALUES (?,?,?,?,?,?,?)");
 
 
-$statement->bind_param("ssssss", $namePrep, $regNumPrep, $phonePrep, $dateJoinedPrep, $emailPrep, $passwordPrep);
+$statement->bind_param("sssssss", $regNumPrep, $holderNamePrep, $busNamePrep, $phonePrep, $dateJoinedPrep, $emailPrep, $passwordPrep);
 
-$namePrep = $name;
 $regNumPrep = $regNum;
+$holderNamePrep = $holderName;
+$busNamePrep = $busName;
 $phonePrep = $phone;
 $dateJoinedPrep = $dateJoined;
 $emailPrep = $email;
@@ -48,11 +47,8 @@ $statement->execute();
 $affected = $statement->affected_rows;
 
 
-$resp["affected"] = $affected;
+$resp["message"] = "completed with ".$affected;
 
-$resp["status"] = "complete";
-
-$resp["password"] = $password;
 
 echo json_encode($resp);
 

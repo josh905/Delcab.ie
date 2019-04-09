@@ -27,9 +27,8 @@ $statement = $conn->prepare("INSERT INTO test (test_value) VALUES (?)");
 $statement->bind_param("s", $valuePrep);
 
 $valuePrep = $dog + $cat;
+
 $statement->execute();
-
-
 
 
 
