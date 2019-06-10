@@ -58,7 +58,7 @@ if($usernameCount>0){
 
 
 
-$statement = $conn->prepare("SELECT * FROM taxi WHERE taxi_number=?");
+$statement = $conn->prepare("SELECT * FROM taxi WHERE taxi_num=?");
 
 
 $statement->bind_param("s", $taxiNumPrep);

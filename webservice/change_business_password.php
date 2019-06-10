@@ -11,29 +11,16 @@ if( ! ( (strpos($_POST['key1'], $key1)!==false) && (strpos($_POST['key2'], $key2
 	exit();
 }
 
-$driverName = $_POST['driverName'];
-$taxiNum = $_POST['taxiNum'];
-$phone = $_POST['phone'];
-$username = $_POST['username'];
+$regNum = $_POST['regNum'];
 $password = $_POST['password'];
 
-$dateJoined = date('Y-m-d H:i:s');
-
-$affected = 0;
-
-$message = "received";
-
-$statement = $conn->prepare("INSERT INTO taxi (driver_name, username, password, taxi_num, phone, date_joined) VALUES (?,?,?,?,?,?)");
+$statement = $conn->prepare("UPDATE business SET password=? WHERE reg_num=?");
 
 
-$statement->bind_param("ssssss", $driverNamePrep, $usernamePrep, $passwordPrep, $taxiNumPrep, $phonePrep, $dateJoinedPrep);
+$statement->bind_param("ss", $passwordPrep, $regNumPrep);
 
-$driverNamePrep = $driverName;
-$usernamePrep = $username;
 $passwordPrep = $password;
-$taxiNumPrep = $taxiNum;
-$phonePrep = $phone;
-$dateJoinedPrep = $dateJoined;
+$regNumPrep = $regNum;
 
 $statement->execute();
 
@@ -45,12 +32,7 @@ $statement->execute();
 $affected = $statement->affected_rows;
 
 
-
 $resp["message"] = "completed with ".$affected;
 
 
 echo json_encode($resp);
-
-
-
-?>

@@ -19,7 +19,7 @@ $rowCount = 0;
 
 $resp["message"] = "received";
 
-$statement = $conn->prepare("SELECT * FROM business WHERE username=?");
+$statement = $conn->prepare("SELECT * FROM taxi WHERE username=?");
 
 
 $statement->bind_param("s", $usernamePrep);
