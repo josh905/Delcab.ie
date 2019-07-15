@@ -22,7 +22,7 @@ if( ! ( (strpos($_POST['key1'], $key1)!==false) && (strpos($_POST['key2'], $key2
 $regNum = $_POST['regNum'];
 
 
-
+//test for b ... Business
 $testdata = array ("company_num"=>$regNum, "company_bus_ind"=>"b", "htmlEnc"=>"1");
 
 
@@ -79,7 +79,7 @@ foreach($results_array as $Object){
 
 
 
-
+//test for c ... Company
 $testdata = array ("company_num"=>$regNum, "company_bus_ind"=>"c", "htmlEnc"=>"1");
 
 
