@@ -11,24 +11,20 @@ if( ! ( (strpos($_POST['key1'], $key1)!==false) && (strpos($_POST['key2'], $key2
 	exit();
 }
 
-$taxi_id = $_POST['taxi_id'];
-$lat = $_POST['lat'];
-$lon = $_POST['lon'];
-$last_location_time = date('Y-m-d H:i:s');
+$package_id = $_POST['package_id'];
+$time_delivered = date('Y-m-d H:i:s');
 
 $affected = 0;
 
 $resp["message"] = "received";
 
-$statement = $conn->prepare("UPDATE taxi SET lat=?, lon=?, last_location_time=? WHERE taxi_id=?");
+$statement = $conn->prepare("UPDATE package SET time_delivered=? WHERE package_id=?");
 
 
-$statement->bind_param("ssss", $lat_prep, $lon_prep, $last_location_time_prep, $taxi_id_prep);
+$statement->bind_param("ss", $time_delivered_prep, $package_id_prep);
 
-$lat_prep = $lat;
-$lon_prep = $lon;
-$last_location_time_prep = $last_location_time;
-$taxi_id_prep = $taxi_id;
+$time_delivered_prep = $time_delivered;
+$package_id_prep = $package_id;
 
 $statement->execute();
 

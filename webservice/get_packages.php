@@ -11,36 +11,36 @@ if( ! ( (strpos($_POST['key1'], $key1)!==false) && (strpos($_POST['key2'], $key2
 	exit();
 }
 
-$taxi_id = $_POST['taxi_id'];
-
-$packageId = 0;
 
 $resp["message"] = "received";
 
-$statement = $conn->prepare("SELECT * FROM package WHERE taxi_id=? AND time_delivered IS NULL");
+$statement = $conn->prepare("SELECT * FROM package WHERE taxi_id IS NULL AND package_id!=?");
 
-$statement->bind_param("s", $taxi_id_prep);
+$statement->bind_param("s", $idPrep);
 
-$taxi_id_prep = $taxi_id;
+$idPrep = '0';
 
 $statement->execute();
 
 $result = $statement->get_result();
 
-/*
+
 $rowCount = mysqli_num_rows($result);
 if($rowCount<1){
-	$resp["message"] = "no such taxi driver";
+	$resp["message"] = "no packages";
 	echo json_encode($resp);
 	exit();
 }
-*/
+
+
+$resp["message"] = "details of packages: g3k7b3";
 
 while($row = $result->fetch_assoc()){
-  $packageId = $row["package_id"];
+  $resp["message"].=$row["package_id"]."j7v4x1".$row["business_id"]."j7v4x1"
+	.$row["business_name"]."j7v4x1".$row["start_lat"]."j7v4x1".$row["start_lon"]
+	."j7v4x1".$row["end_lat"]."j7v4x1".$row["end_lon"]."j7v4x1"
+	.$row["start_ad"]."j7v4x1".$row["end_ad"]."j7v4x1".$row["driver_pay"]."g3k7b3";
 }
-
-$resp["message"] = "package num is ".$packageId;
 
 
 echo json_encode($resp);
